@@ -7,7 +7,6 @@ import { motion, Variants } from "framer-motion";
 import { contactInfo, type ContactInfo } from "@/lib/data";
 import styles from "./contact.module.css";
 
-// 2. Gunakan 'LucideIcon' sebagai tipe dari object icons ini
 const icons: Record<ContactInfo["type"], LucideIcon> = {
   address: MapPin,
   phone: Phone,
@@ -29,8 +28,10 @@ const stagger: Variants = {
 };
 
 function ContactCard({ info }: { info: ContactInfo }) {
-  // 3. Sekarang hapus 'as React.ElementType', cukup panggil seperti biasa
-  const Icon = icons[info.type];
+  // --- PERBAIKAN MUTLAK UNTUK VERCEL ---
+  // Menggunakan 'as React.ElementType<any>' agar TypeScript tidak rewel
+  // saat kita memberikan properti className ke dalamnya.
+ const Icon = icons[info.type] as React.FC<{ className?: string }>;
 
   const content = (
     <motion.div
@@ -38,7 +39,6 @@ function ContactCard({ info }: { info: ContactInfo }) {
       className={`flex items-center gap-5 p-5 md:p-6 cursor-pointer group ${styles.contactCard}`}
     >
       <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${styles.iconWrapper}`}>
-        {/* Error garis merah di sini akan hilang sepenuhnya! */}
         <Icon className="w-5 h-5 text-ghibli-babyblue" />
       </div>
 
@@ -82,7 +82,6 @@ export default function Contact() {
       </div>
 
       {/* --- Elemen Playful: PNG NO-FACE & Lampion Roh --- */}
-      {/* Pastikan kamu sudah menaruh noface.webp/png di dalam folder public/assets/ */}
       <motion.div
         aria-hidden
         animate={{ y: [0, -15, 0] }}
@@ -90,7 +89,7 @@ export default function Contact() {
         className="absolute right-[-5%] top-10 md:right-5 md:top-5 z-0 pointer-events-none opacity-20"
       >
         <Image 
-          src="/assets/noface.webp" // Ganti ekstensi ke .png jika format gambarmu png
+          src="/assets/noface.webp" 
           alt="No Face Silhouette"
           width={450} 
           height={650}
