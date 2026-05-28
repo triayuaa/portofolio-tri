@@ -1,0 +1,89 @@
+/* src/components/sections/Contact/contact.module.css */
+
+/* Animasi melayang konstan untuk siluet No-Face */
+.noFaceSilhouette {
+  position: absolute;
+  right: 5%;
+  top: 15%;
+  font-size: 15rem;
+  opacity: 0.05;
+  color: var(--color-ghibli-babyblue);
+  filter: drop-shadow(0 0 20px rgba(167, 216, 222, 0.5));
+  animation: floatNoFace 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+@keyframes floatNoFace {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.02); }
+}
+
+/* Lampion kecil yang ditawarkan No-Face (Dekorasi) */
+.spiritLantern {
+  position: absolute;
+  width: 12px;
+  height: 18px;
+  background-color: var(--color-ghibli-babyblue);
+  border-radius: 4px;
+  box-shadow: 0 0 20px 5px rgba(167, 216, 222, 0.6);
+  opacity: 0.3;
+  animation: flicker 3s infinite alternate;
+}
+
+.lantern1 { right: 25%; top: 40%; animation-delay: 0s; }
+.lantern2 { right: 15%; top: 60%; animation-delay: 1.5s; width: 8px; height: 12px; }
+
+@keyframes flicker {
+  0% { opacity: 0.2; transform: scale(0.95); }
+  50% { opacity: 0.5; transform: scale(1.05); }
+  100% { opacity: 0.3; transform: scale(1); }
+}
+
+/* Gaya Kartu Kontak Interaktif */
+.contactCard {
+  background: linear-gradient(135deg, rgba(22, 38, 53, 0.5) 0%, rgba(5, 8, 16, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(167, 216, 222, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contactCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--color-ghibli-babyblue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+  box-shadow: 0 0 10px rgba(167, 216, 222, 0.8);
+}
+
+.contactCard:hover {
+  transform: translateX(10px);
+  border-color: rgba(167, 216, 222, 0.4);
+  box-shadow: -5px 10px 30px rgba(167, 216, 222, 0.1);
+  background: linear-gradient(135deg, rgba(22, 38, 53, 0.7) 0%, rgba(5, 8, 16, 0.95) 100%);
+}
+
+.contactCard:hover::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+/* Ikon di dalam kartu */
+.iconWrapper {
+  background: rgba(167, 216, 222, 0.05);
+  border: 1px solid rgba(167, 216, 222, 0.2);
+  transition: all 0.3s ease;
+}
+
+.contactCard:hover .iconWrapper {
+  background: rgba(167, 216, 222, 0.2);
+  border-color: rgba(167, 216, 222, 0.6);
+  transform: rotate(10deg);
+}

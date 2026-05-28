@@ -1,0 +1,136 @@
+/* src/components/sections/about.module.css */
+
+/* (BIARKAN KODE LAMA SEPERTI glowingTitle, waterReflection, shikigami, skillBadge) */
+.glowingTitle {
+  background: linear-gradient(135deg, var(--color-ghibli-white) 0%, var(--color-ghibli-babyblue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.waterReflection {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background: radial-gradient(circle at 50% 50%, rgba(167, 216, 222, 0.03) 0%, transparent 60%);
+  animation: ripple 8s infinite alternate ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.05) translate(-2%, 2%); }
+}
+
+.shikigami {
+  position: absolute;
+  width: 14px;
+  height: 20px;
+  background-color: rgba(240, 245, 249, 0.4);
+  clip-path: polygon(50% 0%, 100% 40%, 80% 100%, 20% 100%, 0% 40%);
+  box-shadow: 0 0 10px rgba(167, 216, 222, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  animation: flyPaper 15s linear infinite;
+}
+
+.paper1 { top: 70%; left: -5%; animation-delay: 0s; }
+.paper2 { top: 30%; left: -10%; animation-delay: 6s; width: 10px; height: 14px; }
+.paper3 { top: 80%; left: -5%; animation-delay: 11s; width: 18px; height: 26px; }
+
+@keyframes flyPaper {
+  0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  100% { transform: translateX(110vw) translateY(-40vh) rotate(720deg); opacity: 0; }
+}
+
+.skillBadge {
+  position: relative;
+  overflow: hidden;
+}
+
+.skillBadge::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(167, 216, 222, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+
+.skillBadge:hover::after {
+  left: 150%;
+  transition: all 0.5s ease;
+}
+
+/* --- TAMBAHAN BARU --- */
+
+/* Lampion Keahlian (Bouncing) */
+.lanternCard {
+  background: linear-gradient(to bottom, rgba(22, 38, 53, 0.8), rgba(5, 8, 16, 0.95));
+  border: 1px solid rgba(167, 216, 222, 0.2);
+  border-radius: 16px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Tali Lampion */
+.lanternCard::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background: rgba(167, 216, 222, 0.3);
+  transform: translateX(-50%);
+}
+
+.lanternCard:hover {
+  transform: translateY(-10px);
+  border-color: rgba(167, 216, 222, 0.5);
+  box-shadow: 0 10px 30px rgba(167, 216, 222, 0.15);
+}
+
+/* Gerbang Torii di air */
+.toriiGate {
+  position: absolute;
+  right: 15vw;
+  bottom: 30px;
+  width: 100px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  opacity: 0.6;
+}
+
+/* Atap Torii */
+.toriiTop {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-ghibli-navy);
+  border-radius: 10px 10px 0 0;
+  box-shadow: inset 0 2px rgba(167, 216, 222, 0.3);
+}
+
+/* Tiang Torii */
+.toriiPillars {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  height: 100%;
+}
+
+.toriiPillar {
+  width: 10px;
+  height: 100%;
+  background-color: var(--color-ghibli-navy);
+  box-shadow: inset -2px 0 rgba(167, 216, 222, 0.2);
+}

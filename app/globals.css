@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* --- Konfigurasi Tema Tailwind v4 --- */
+@theme {
+  /* Palet Warna Baru (Tanpa Emas) */
+  --color-ghibli-black: #050810;     /* Hitam pekat dengan sedikit tint biru malam */
+  --color-ghibli-navy: #162635;      /* Deep navy / biru dongker gelap */
+  --color-ghibli-babyblue: #A7D8DE;  /* Biru muda bercahaya (seperti naga Haku) */
+  --color-ghibli-white: #F0F5F9;     /* Putih bersih sedikit kebiruan untuk teks */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    /* Set text default ke putih agar terbaca di background gelap */
+    @apply text-ghibli-white antialiased overflow-x-hidden;
+    
+    /* Background utama menggunakan gradasi radial (Hitam & Navy) 
+       Memberikan efek kedalaman air atau langit malam */
+    background: radial-gradient(
+      circle at top center, 
+      var(--color-ghibli-navy) 0%, 
+      var(--color-ghibli-black) 70%,
+      #000000 100%
+    );
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  /* Custom class untuk elemen kartu (card) dengan efek glassmorphism gradasi */
+  .bg-glass-card {
+    background: linear-gradient(
+      135deg, 
+      rgba(240, 245, 249, 0.05) 0%,   /* Hint putih transparan di sudut */
+      rgba(22, 38, 53, 0.4) 50%,      /* Navy transparan di tengah */
+      rgba(5, 8, 16, 0.7) 100%        /* Hitam pekat di ujung bawah */
+    );
+    @apply border border-ghibli-babyblue/20 backdrop-blur-md;
+  }
+
+  /* Gradasi cahaya Baby Blue ke transparan untuk efek pendar (glow) */
+  .glow-babyblue {
+    background: radial-gradient(
+      circle, 
+      rgba(167, 216, 222, 0.15) 0%, 
+      transparent 70%
+    );
+  }
+}
+
+/* --- Custom Scrollbar (Tanpa Emas) --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-ghibli-black;
+}
+
+::-webkit-scrollbar-thumb {
+  /* Menggunakan baby blue gelap untuk scrollbar */
+  @apply bg-ghibli-babyblue/30 rounded-full border-2 border-ghibli-black; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* Menerang saat di-hover */
+  @apply bg-ghibli-babyblue/60;
+}

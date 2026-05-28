@@ -1,0 +1,111 @@
+/* src/components/sections/hero.module.css */
+
+/* Teks dengan kilauan animasi (Shimmer) */
+.shimmerText {
+  background: linear-gradient(
+    to right,
+    var(--color-ghibli-white) 20%,
+    var(--color-ghibli-babyblue) 50%,
+    var(--color-ghibli-white) 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Bentuk Tiket Kereta (Ticket Punch) */
+.ticketShape {
+  position: relative;
+  background: linear-gradient(135deg, rgba(22, 38, 53, 0.4) 0%, rgba(5, 8, 16, 0.8) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 216, 222, 0.2);
+  border-radius: 32px;
+  /* Membuat bolongan tiket di pinggir kiri dan kanan */
+  mask-image: radial-gradient(circle at 0% 50%, transparent 20px, black 21px),
+              radial-gradient(circle at 100% 50%, transparent 20px, black 21px);
+  mask-size: 51% 100%;
+  mask-repeat: no-repeat;
+  mask-position: left, right;
+  -webkit-mask-image: radial-gradient(circle at 0% 50%, transparent 20px, black 21px),
+                      radial-gradient(circle at 100% 50%, transparent 20px, black 21px);
+  -webkit-mask-size: 51% 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: left, right;
+}
+
+/* Garis putus-putus khas tiket di tengah */
+.ticketDivider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 25%;
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(167, 216, 222, 0.3) 0,
+    rgba(167, 216, 222, 0.3) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+/* Rel Kereta Laut (Perspective) */
+.seaRailway {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25vh;
+  /* Membuat garis rel dan bayangan air */
+  background-image: 
+    linear-gradient(to right, transparent 48%, rgba(167, 216, 222, 0.3) 49%, rgba(167, 216, 222, 0.3) 51%, transparent 52%),
+    repeating-linear-gradient(to bottom, transparent, transparent 15px, rgba(167, 216, 222, 0.1) 16px, rgba(167, 216, 222, 0.1) 18px);
+  /* Transformasi 3D untuk efek rel terbentang ke depan */
+  transform: perspective(600px) rotateX(75deg);
+  transform-origin: bottom center;
+  animation: moveTrain 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes moveTrain {
+  from { background-position: 0 0; }
+  to { background-position: 0 36px; } /* Bergerak ke bawah memberi ilusi kita maju */
+}
+
+/* Latar belakang bertekstur untuk dalam tiket */
+.ticketInnerBg {
+  position: absolute;
+  inset: 0;
+  border-radius: 32px; /* Samakan dengan parent */
+  z-index: 0;
+  pointer-events: none;
+
+  /* --- PERUBAHAN DI SINI --- */
+  
+  /* Kita menumpuk dua background:
+     1. Paling atas: Gradasi Navy transparan (sedikit disesuaikan opasitasnya agar gambar terlihat)
+     2. Di bawahnya: Gambar Spirited Away
+  */
+  background-image: 
+    /* Layer 1: Gradasi Navy transparan ke kiri bawah */
+    linear-gradient(215deg, transparent 20%, rgba(22, 38, 53, 0.85) 60%, rgba(5, 8, 16, 0.95) 100%),
+    /* Layer 2: Gambar foto Spirited Away */
+    url('/assets/spirited-away-bg.png'); /* Sesuaikan path dengan nama file Anda di folder public */
+  
+  /* Pengaturan agar gambar cover sempurna dan tidak pecah */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* Opsional: Tambahkan sedikit efek blur pada gambar agar teks lebih mudah dibaca */
+  filter: blur(1px); 
+  /* Sedikit gelapkan gambar asli agar gradasi Navy lebih dominan */
+  opacity: 0.9;
+}

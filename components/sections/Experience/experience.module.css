@@ -1,0 +1,65 @@
+/* src/components/sections/Experience/experience.module.css */
+
+/* Rel kereta ajaib bercahaya */
+.magicTrack {
+  position: absolute;
+  inset: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(167, 216, 222, 0.5), transparent);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Partikel cahaya yang berjalan di sepanjang rel (seperti kereta roh) */
+.trackSpark {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 30px;
+  background-color: var(--color-ghibli-babyblue);
+  border-radius: 10px;
+  box-shadow: 0 0 20px 5px rgba(167, 216, 222, 0.8);
+  animation: runDown 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes runDown {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Lencana Teknologi (Tech Badges) */
+.techBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  background: rgba(167, 216, 222, 0.05);
+  border: 1px solid rgba(167, 216, 222, 0.2);
+  color: var(--color-ghibli-babyblue);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: default;
+}
+
+.techBadge:hover {
+  background: rgba(167, 216, 222, 0.15);
+  border-color: rgba(167, 216, 222, 0.5);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(167, 216, 222, 0.2);
+  color: var(--color-ghibli-white);
+}
+
+/* Animasi lompat kecil untuk ikon di dalam badge saat di hover */
+.techBadge:hover span {
+  animation: bounceIcon 0.5s ease;
+}
+
+@keyframes bounceIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
