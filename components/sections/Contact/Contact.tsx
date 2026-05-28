@@ -1,13 +1,14 @@
 // src/components/sections/Contact/Contact.tsx
 "use client";
 
+import { MapPin, Phone, Mail, LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import { MapPin, Phone, Mail } from "lucide-react";
 import { contactInfo, type ContactInfo } from "@/lib/data";
 import styles from "./contact.module.css";
 
-// Map contact type to Lucide icon
-const icons: Record<ContactInfo["type"], React.ElementType> = {
+// 2. Gunakan 'LucideIcon' sebagai tipe dari object icons ini
+const icons: Record<ContactInfo["type"], LucideIcon> = {
   address: MapPin,
   phone: Phone,
   email: Mail,
@@ -22,12 +23,13 @@ const fadeUp: Variants = {
   }),
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.15 } },
 };
 
 function ContactCard({ info }: { info: ContactInfo }) {
+  // 3. Sekarang hapus 'as React.ElementType', cukup panggil seperti biasa
   const Icon = icons[info.type];
 
   const content = (
@@ -35,8 +37,8 @@ function ContactCard({ info }: { info: ContactInfo }) {
       variants={fadeUp}
       className={`flex items-center gap-5 p-5 md:p-6 cursor-pointer group ${styles.contactCard}`}
     >
-      {/* Icon Container */}
       <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${styles.iconWrapper}`}>
+        {/* Error garis merah di sini akan hilang sepenuhnya! */}
         <Icon className="w-5 h-5 text-ghibli-babyblue" />
       </div>
 
@@ -74,19 +76,28 @@ export default function Contact() {
     >
       {/* --- Background Ambience --- */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        {/* Deep blue/black gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-ghibli-black via-ghibli-navy/20 to-black" />
-        
-        {/* Glow orbs */}
         <div className="absolute top-20 left-10 w-96 h-96 rounded-full bg-ghibli-babyblue/5 blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-ghibli-navy/30 blur-[150px]" />
       </div>
 
-      {/* --- Elemen Playful: No-Face & Lampion Roh --- */}
-      <div className={styles.noFaceSilhouette}>
-        {/* Menggunakan emoji topeng sebagai siluet abstrak No-Face */}
-        🎭
-      </div>
+      {/* --- Elemen Playful: PNG NO-FACE & Lampion Roh --- */}
+      {/* Pastikan kamu sudah menaruh noface.webp/png di dalam folder public/assets/ */}
+      <motion.div
+        aria-hidden
+        animate={{ y: [0, -15, 0] }}
+        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+        className="absolute right-[-5%] top-10 md:right-5 md:top-5 z-0 pointer-events-none opacity-20"
+      >
+        <Image 
+          src="/assets/noface.webp" // Ganti ekstensi ke .png jika format gambarmu png
+          alt="No Face Silhouette"
+          width={450} 
+          height={650}
+          className="object-contain filter drop-shadow-[0_0_15px_rgba(167,216,222,0.5)]"
+        />
+      </motion.div>
+
       <div className={`${styles.spiritLantern} ${styles.lantern1}`} />
       <div className={`${styles.spiritLantern} ${styles.lantern2}`} />
 
@@ -115,10 +126,9 @@ export default function Contact() {
         {/* --- Contact Cards Grid --- */}
         <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-center">
           
-          {/* Kolom Kiri: Visual Dekoratif (Hanya di Desktop) */}
+          {/* Kolom Kiri: Visual Dekoratif Lampion */}
           <div className="hidden md:flex md:col-span-4 flex-col items-center justify-center p-8">
              <div className="w-48 h-48 rounded-full border border-ghibli-babyblue/20 bg-ghibli-babyblue/5 flex items-center justify-center relative">
-                {/* Lingkaran pendar di belakang */}
                 <div className="absolute inset-0 rounded-full bg-ghibli-babyblue/10 blur-2xl animate-pulse" />
                 <span className="text-6xl filter drop-shadow-[0_0_15px_rgba(167,216,222,0.8)]">🎐</span>
              </div>
