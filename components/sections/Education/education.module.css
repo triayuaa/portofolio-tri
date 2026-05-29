@@ -110,3 +110,24 @@
   0%, 70% { left: -150%; }
   100% { left: 200%; }
 }
+
+/* --- TAMBAHAN BARU: INDIKATOR KLIK --- */
+.clickableBadge {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clickableBadge:hover {
+  border-color: rgba(167, 216, 222, 0.8);
+  box-shadow: 0 0 15px rgba(167, 216, 222, 0.3);
+  transform: scale(1.05);
+}
+
+.zoomIcon {
+  animation: pulseZoom 2s infinite;
+}
+
+@keyframes pulseZoom {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}

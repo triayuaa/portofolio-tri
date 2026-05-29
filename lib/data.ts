@@ -79,6 +79,7 @@ export type Achievement = {
   level: string;
   year: string;
   isGold: boolean;
+  certificate?: string;
 };
 
 export type Education = {
@@ -97,6 +98,16 @@ export const education: Education[] = [
     level: "SMK",
     major: "Rekayasa Perangkat Lunak",
     period: "2023 – 2026",
+    achievements: [
+    {
+      title: "Terbaik 2 Prestasi Akademik KK RPL",
+      level: "Sekolah",
+      year: "2026",
+      isGold: true,
+      // TAMBAHKAN BARIS INI:
+      certificate: "/assets/sertif.webp" // Pastikan gambar ada di folder public/assets
+    }
+  ]
   },
   {
     id: "edu-2",

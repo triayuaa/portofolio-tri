@@ -1,11 +1,10 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, OrbitControls, Sphere, MeshDistortMaterial, Trail } from "@react-three/drei";
+import { Float, Sphere, MeshDistortMaterial, Trail } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import { motion, Variants } from "framer-motion";
-import Image from "next/image"; // Import Image
 import styles from "./hero.module.css";
 
 // --- 3D INTERACTIVE WATER SPIRIT ---
@@ -31,7 +30,8 @@ function InteractiveSpirit() {
     <group ref={groupRef}>
       <Float speed={2.5} rotationIntensity={0.5} floatIntensity={1.5}>
         <Trail width={2} color="#A7D8DE" length={4} decay={1} attenuation={(t) => t * t}>
-          <Sphere ref={sphereRef} args={[1.5, 64, 64]} scale={1.2}>
+          {/* OPTIMASI 1: Menurunkan segmen bola dari 64x64 menjadi 32x32 agar GPU tidak menangis */}
+          <Sphere ref={sphereRef} args={[1.5, 32, 32]} scale={1.2}>
             <MeshDistortMaterial 
               color="#A7D8DE" 
               emissive="#162635" 
@@ -85,34 +85,15 @@ export default function Hero() {
       {/* Animasi Rel Kereta Laut */}
       <div className={styles.seaRailway} />
 
-      {/* --- IMAGE ASSET: NAGA HAKU MENGAPUNG --- */}
-      {/* Gambar ini diletakkan di belakang UI Tiket namun di depan background */}
-      <motion.div
-        animate={{
-          y: [-15, 15, -15],
-          rotate: [-2, 2, -2]
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 8,
-          ease: "easeInOut"
-        }}
-        className="absolute inset-0 z-[15] pointer-events-none flex items-center justify-center lg:justify-end lg:pr-20 opacity-40 mix-blend-screen"
-      >
-        <div className="relative w-[600px] h-[600px] lg:w-[800px] lg:h-[800px]">
-          <Image 
-            src="/assets/haku-dragon.png" // Pastikan kamu menaruh PNG Naga Haku transparan di path ini
-            alt="Haku Spirit Dragon"
-            fill
-            className="object-contain filter drop-shadow-[0_0_30px_rgba(167,216,222,0.8)]"
-            priority
-          />
-        </div>
-      </motion.div>
-
       {/* --- CANVAS 3D --- */}
+      {/* Gambar Naga Haku Dihapus. Hanya menyisakan 3D yang sudah dioptimasi */}
       <div className="absolute right-0 w-full md:w-3/5 h-full z-10 pointer-events-none md:pointer-events-auto opacity-70">
-        <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
+        {/* OPTIMASI 2: Membatasi DPR (Device Pixel Ratio) agar performa mulus saat di-scroll */}
+        <Canvas 
+          camera={{ position: [0, 0, 6], fov: 45 }}
+          dpr={[1, 1.5]} 
+          gl={{ antialias: false, powerPreference: "high-performance" }}
+        >
           <ambientLight intensity={0.5} color="#F0F5F9" />
           <directionalLight position={[5, 10, 5]} intensity={2} color="#A7D8DE" />
           <pointLight position={[-10, -10, -5]} intensity={1} color="#162635" />
@@ -130,7 +111,7 @@ export default function Hero() {
           transition={{ duration: 1, type: "spring", bounce: 0.3 }}
           className={`w-full md:max-w-3xl p-8 md:p-12 pointer-events-auto shadow-[0_20px_50px_rgba(5,8,16,0.8)] ${styles.ticketShape} overflow-hidden`}
         >
-          {/* Latar Belakang Gradasi Navy di dalam Tiket */}
+          {/* Latar Belakang Gradasi Navy & Gambar di dalam Tiket */}
           <div className={styles.ticketInnerBg} />
 
           {/* Garis putus-putus tiket */}
@@ -140,7 +121,7 @@ export default function Hero() {
             
             {/* Stamp / Label Tiket */}
             <motion.div variants={itemVariants} className="flex items-center gap-2 mb-6">
-              <span className="px-3 py-1 bg-ghibli-babyblue/10 border border-ghibli-babyblue/30 text-ghibli-babyblue rounded-full text-[10px] uppercase tracking-widest font-bold backdrop-blur-md">
+              <span className="px-3 py-1 bg-ghibli-babyblue/10 border border-ghibli-babyblue/30 text-ghibli-babyblue rounded-full text-[10px] uppercase tracking-widest font-bold backdrop-blur-sm">
                 🎫 Tiket Perjalanan
               </span>
               <span className="text-ghibli-white/60 text-[10px] font-mono tracking-widest uppercase bg-black/20 px-2 py-1 rounded backdrop-blur-sm">

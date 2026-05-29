@@ -64,7 +64,7 @@ export default function Experience() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
           className="text-center mb-20"
         >
           <p className="text-ghibli-babyblue font-semibold tracking-widest uppercase text-sm mb-2 opacity-80">

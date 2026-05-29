@@ -17,6 +17,7 @@
   background: radial-gradient(circle at 50% 50%, rgba(167, 216, 222, 0.03) 0%, transparent 60%);
   animation: ripple 8s infinite alternate ease-in-out;
   pointer-events: none;
+  will-change: transform;
 }
 
 @keyframes ripple {
@@ -34,6 +35,7 @@
   opacity: 0;
   pointer-events: none;
   animation: flyPaper 15s linear infinite;
+  will-change: transform, opacity;
 }
 
 .paper1 { top: 70%; left: -5%; animation-delay: 0s; }
@@ -134,3 +136,83 @@
   background-color: var(--color-ghibli-navy);
   box-shadow: inset -2px 0 rgba(167, 216, 222, 0.2);
 }
+
+/* --- BARU: MODIFIKASI FOTO BOOTH --- */
+
+/* Wrapper Utama Photobooth Ghibli */
+.photoboothBoxWrapper {
+  position: relative;
+  padding: 10px; /* Space untuk Soot Sprites dekorasi */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* Bingkai Foto Instant (Photobooth Style) dengan Warna Ghibli */
+.photoFrame {
+  background-color: var(--color-ghibli-navy); /* Menggunakan warna navy tema Ghibli */
+  border: 1px solid rgba(167, 216, 222, 0.3); /* Babyblue accent */
+  border-radius: 8px; /* Rounded corners khas photobooth */
+  box-shadow: 0 0 25px rgba(167, 216, 222, 0.2); /* Subtle glow */
+  overflow: hidden;
+  position: relative;
+  
+  /* Memberikan bentuk polaroid/photobooth style: thicker bottom border */
+  border-width: 6px 6px 30px 6px; 
+}
+
+/* Gambar Tri Ayuaningsih */
+.actualPhoto {
+  width: 160px; /* Ukuran yang proporsional */
+  height: 250px;
+  object-fit: cover; /* Biar foto tidak gepeng */
+  display: block;
+  
+  /* Menambahkan sedikit filter vintage untuk feel photobooth Ghibli */
+  filter: grayscale(10%) sepia(10%); 
+}
+
+/* Text Photobooth di bagian bawah yang thicker */
+.photoText {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-mono); /* Font mono seperti existing period text */
+  font-size: 10px;
+  color: var(--color-ghibli-white); /* Warna putih tema */
+  padding: 4px 0;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+/* Dekorasi Soot Sprites (Makkuro Kurosuke) di Sudut */
+.sootSpriteDecor {
+  position: absolute;
+  width: 12px; height: 12px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  border: 1px solid white;
+  z-index: 1;
+}
+
+/* Animasi sederhana Soot Sprites: bounce pelan */
+@keyframes sootBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.sootSpriteDecor::before, .sootSpriteDecor::after {
+  content: '*'; /* Representasi mata Soot Sprites */
+  font-size: 8px;
+  color: white;
+  position: absolute;
+  animation: sootBounce 1s infinite alternate;
+}
+.sootSpriteDecor::after { animation-delay: 0.2s; left: 6px; }
+
+/* Posisi Soot Sprites di boks foto */
+.soot1 { top: 0; left: 0; animation-delay: 0s; }
+.soot2 { bottom: -10px; right: -5px; animation-delay: 0.5s; width: 14px; height: 14px; }

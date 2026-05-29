@@ -50,7 +50,7 @@ export default function About() {
 
   return (
     <section id="about" className="relative py-24 px-4 overflow-hidden z-10 bg-ghibli-black">
-      
+
       {/* Background Orbs & CSS Module Animations */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-ghibli-babyblue/5 blur-[100px]" />
@@ -62,7 +62,7 @@ export default function About() {
       </div>
 
       <div className="relative max-w-7xl mx-auto z-10 mb-32 md:mb-48">
-        
+
         {/* Section heading */}
         <motion.div
           variants={fadeUp}
@@ -82,7 +82,7 @@ export default function About() {
 
         {/* LAYOUT BARU: Top Profil, Bottom Lanterns */}
         <div className="flex flex-col gap-16 items-center">
-          
+
           {/* Kartu Profil (Di Tengah, Melayang) */}
           <motion.div
             variants={fadeUp}
@@ -93,11 +93,34 @@ export default function About() {
           >
             {/* Animasi Cahaya Pindai */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ghibli-babyblue/5 to-transparent h-[200%] -top-[100%] group-hover:top-[100%] transition-all duration-1000 ease-in-out" />
-            
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 relative z-10">
-              <div className="w-24 h-24 flex-shrink-0 rounded-full bg-ghibli-babyblue/10 border border-ghibli-babyblue/30 flex items-center justify-center filter drop-shadow-[0_0_15px_rgba(167,216,222,0.5)]">
-                <span className="text-5xl">🐉</span>
-              </div>
+
+            {/* --- MODIFIKASI KONTEN PROFIL: GANTI EMOJI DENGAN FOTO BOX --- */}
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
+
+              {/* BOKS FOTO INTERAKTIF */}
+              <motion.div
+                className={`flex-shrink-0 w-44 md:w-48 ${styles.photoboothBoxWrapper}`}
+                /* Interaksi Hover: Scale dan Rotasi khas photobooth */
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                {/* Dekorasi Soot Sprites Ghibli */}
+                <div className={`${styles.sootSpriteDecor} ${styles.soot1}`} />
+                <div className={`${styles.sootSpriteDecor} ${styles.soot2}`} />
+
+                {/* Bingkai Foto Photobooth */}
+                <div className={styles.photoFrame}>
+                  {/* Pastikan file tri-ayuaningsih.jpg ditaruh di folder /public/ */}
+                  <img
+                    src="/assets/fotopas-tri.webp"
+                    alt="Foto Tri Ayuaningsih"
+                    className={styles.actualPhoto}
+                  />
+                  <span className={styles.photoText}>Ayuaningsih.</span>
+                </div>
+              </motion.div>
+
               <div className="text-center md:text-left">
                 <h3 className="text-2xl font-bold text-ghibli-white font-serif mb-4">
                   Profil Singkat
@@ -150,18 +173,18 @@ export default function About() {
 
       {/* --- INTERACTIVE SPIRITED AWAY SEA TRAIN --- */}
       <div className="absolute bottom-10 left-0 w-full h-24 pointer-events-auto overflow-hidden">
-        
+
         {/* Rel Air / Horizon Line */}
         <div className="absolute bottom-6 w-full h-[1px] bg-gradient-to-r from-transparent via-ghibli-babyblue/40 to-transparent" />
         <div className="absolute bottom-6 w-full h-8 bg-gradient-to-t from-ghibli-babyblue/5 to-transparent blur-md" />
 
         {/* Gerbang Torii di Tengah Air */}
         <div className={styles.toriiGate}>
-           <div className={styles.toriiTop} />
-           <div className={styles.toriiPillars}>
-             <div className={styles.toriiPillar} />
-             <div className={styles.toriiPillar} />
-           </div>
+          <div className={styles.toriiTop} />
+          <div className={styles.toriiPillars}>
+            <div className={styles.toriiPillar} />
+            <div className={styles.toriiPillar} />
+          </div>
         </div>
 
         {/* Container Kereta dengan Animasi Berjalan */}
@@ -178,33 +201,33 @@ export default function About() {
         >
           {/* Efek Riak Air di bawah kereta saat dash */}
           {isTrainDashing && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 1, scaleX: 0 }}
               animate={{ opacity: 0, scaleX: 3 }}
               transition={{ duration: 1 }}
-              className="absolute -bottom-1 -left-10 w-32 h-2 bg-ghibli-babyblue/60 blur-sm rounded-full" 
+              className="absolute -bottom-1 -left-10 w-32 h-2 bg-ghibli-babyblue/60 blur-sm rounded-full"
             />
           )}
 
           {/* Gerbong Penumpang 2 (Belakang) */}
           <div className="w-14 h-9 bg-ghibli-navy border border-ghibli-babyblue/20 rounded-t-sm relative flex items-center justify-center opacity-90 group-hover:border-ghibli-babyblue/60 transition-colors shadow-lg">
-             <div className="w-6 h-4 bg-ghibli-babyblue/10 rounded-sm overflow-hidden flex items-end justify-center glow-babyblue">
-               {/* Bayangan Penumpang */}
-               <span className="text-[10px] opacity-40">👤</span>
-             </div>
-             <div className="absolute -bottom-1 left-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
-             <div className="absolute -bottom-1 right-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
+            <div className="w-6 h-4 bg-ghibli-babyblue/10 rounded-sm overflow-hidden flex items-end justify-center glow-babyblue">
+              {/* Bayangan Penumpang */}
+              <span className="text-[10px] opacity-40">👤</span>
+            </div>
+            <div className="absolute -bottom-1 left-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
+            <div className="absolute -bottom-1 right-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
           </div>
           <div className="w-2 h-1 bg-ghibli-babyblue/20 mb-1" />
 
           {/* Gerbong Penumpang 1 (Tengah) */}
           <div className="w-14 h-9 bg-ghibli-navy border border-ghibli-babyblue/20 rounded-t-sm relative flex items-center justify-center opacity-90 group-hover:border-ghibli-babyblue/60 transition-colors shadow-lg">
-             <div className="w-6 h-4 bg-ghibli-babyblue/10 rounded-sm overflow-hidden flex items-end justify-center glow-babyblue">
-               {/* Bayangan Penumpang (No Face) */}
-               <span className="text-[10px] opacity-60">👻</span>
-             </div>
-             <div className="absolute -bottom-1 left-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
-             <div className="absolute -bottom-1 right-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
+            <div className="w-6 h-4 bg-ghibli-babyblue/10 rounded-sm overflow-hidden flex items-end justify-center glow-babyblue">
+              {/* Bayangan Penumpang (No Face) */}
+              <span className="text-[10px] opacity-60">👻</span>
+            </div>
+            <div className="absolute -bottom-1 left-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
+            <div className="absolute -bottom-1 right-2 w-2 h-2 rounded-full bg-ghibli-babyblue/30" />
           </div>
           <div className="w-2 h-1 bg-ghibli-babyblue/20 mb-1" />
 
@@ -212,7 +235,7 @@ export default function About() {
           <div className="w-16 h-10 bg-black border border-ghibli-babyblue/40 rounded-tr-xl rounded-tl-sm relative flex flex-col justify-end opacity-90 group-hover:border-ghibli-babyblue transition-colors group-hover:shadow-[0_0_15px_rgba(167,216,222,0.5)] z-20">
             <div className="absolute top-2 right-2 w-5 h-4 bg-ghibli-babyblue/30 rounded-sm glow-babyblue" />
             <div className="absolute -top-3 left-2 w-3 h-3 bg-black border border-ghibli-babyblue/40 rounded-t-sm" />
-            
+
             {!isTrainDashing && (
               <motion.div
                 animate={{ y: [-5, -25], opacity: [0.6, 0], scale: [1, 2.5] }}

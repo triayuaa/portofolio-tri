@@ -1,7 +1,8 @@
+// src/components/layout/Navbar.tsx
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -14,25 +15,22 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Deteksi scroll untuk mengubah background Navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // OPTIMASI 1: Menggunakan useScroll dari Framer Motion (Lebih ringan dari window.addEventListener)
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 20);
+  });
 
   return (
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 border-b ${
           isScrolled
-            ? "bg-ghibli-navy/70 backdrop-blur-lg border-ghibli-babyblue/20 py-3 shadow-[0_10px_30px_rgba(5,8,16,0.5)]"
+            ? "bg-ghibli-navy/80 backdrop-blur-md border-ghibli-babyblue/20 py-3 shadow-[0_10px_30px_rgba(5,8,16,0.5)]"
             : "bg-transparent border-transparent py-5 md:py-6"
         }`}
+        style={{ willChange: "background-color, padding" }}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
           
@@ -47,29 +45,19 @@ export default function Navbar() {
             <span className="opacity-90 group-hover:opacity-100 transition-opacity">Ayuaningsih.</span>
           </a>
 
-          {/* Desktop Navigation (Playful & Animated) */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-2">
-            {navLinks.map((link, index) => (
+            {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                className="relative px-5 py-2 text-sm font-semibold text-ghibli-white/70 hover:text-ghibli-white transition-colors duration-300"
+                // OPTIMASI 2: Menghapus JS State untuk hover, menggunakan class 'group' CSS murni
+                className="relative px-5 py-2 text-sm font-semibold text-ghibli-white/70 hover:text-ghibli-white transition-colors duration-300 group"
               >
                 {link.name}
                 
-                {/* Efek Hover: Titik Cahaya Roh Bergerak */}
-                {hoveredIndex === index && (
-                  <motion.div
-                    layoutId="navIndicator"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-ghibli-babyblue shadow-[0_0_10px_2px_rgba(167,216,222,0.7)]"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  />
-                )}
+                {/* Efek Hover: Titik Cahaya Roh (CSS Pure - Zero Lag) */}
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-ghibli-babyblue shadow-[0_0_10px_2px_rgba(167,216,222,0.7)] opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out" />
               </a>
             ))}
           </nav>
@@ -85,7 +73,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Navigation Overlay (Dark Mode Ghibli) */}
+      {/* Mobile Navigation Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -94,6 +82,7 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[45] flex justify-end bg-ghibli-black/80 backdrop-blur-md"
+            style={{ willChange: "opacity" }}
           >
             <motion.div 
               initial={{ x: "100%" }}
@@ -101,6 +90,7 @@ export default function Navbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="w-[75%] max-w-sm h-full bg-gradient-to-b from-ghibli-navy to-ghibli-black border-l border-ghibli-babyblue/20 shadow-2xl flex flex-col pt-28 px-8"
+              style={{ willChange: "transform" }}
             >
               <nav className="flex flex-col gap-6">
                 {navLinks.map((link, i) => (

@@ -72,6 +72,9 @@
   transform-origin: bottom center;
   animation: moveTrain 3s linear infinite;
   pointer-events: none;
+  
+  /* OPTIMASI 3: Memisahkan animasi kereta ke GPU agar tidak nge-lag saat di-scroll */
+  will-change: background-position;
 }
 
 @keyframes moveTrain {
@@ -86,26 +89,12 @@
   border-radius: 32px; /* Samakan dengan parent */
   z-index: 0;
   pointer-events: none;
-
-  /* --- PERUBAHAN DI SINI --- */
-  
-  /* Kita menumpuk dua background:
-     1. Paling atas: Gradasi Navy transparan (sedikit disesuaikan opasitasnya agar gambar terlihat)
-     2. Di bawahnya: Gambar Spirited Away
-  */
   background-image: 
-    /* Layer 1: Gradasi Navy transparan ke kiri bawah */
     linear-gradient(215deg, transparent 20%, rgba(22, 38, 53, 0.85) 60%, rgba(5, 8, 16, 0.95) 100%),
-    /* Layer 2: Gambar foto Spirited Away */
-    url('/assets/spirited-away-bg.png'); /* Sesuaikan path dengan nama file Anda di folder public */
-  
-  /* Pengaturan agar gambar cover sempurna dan tidak pecah */
+    url('/assets/spirited-away-bg.webp'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  
-  /* Opsional: Tambahkan sedikit efek blur pada gambar agar teks lebih mudah dibaca */
   filter: blur(1px); 
-  /* Sedikit gelapkan gambar asli agar gradasi Navy lebih dominan */
   opacity: 0.9;
 }
